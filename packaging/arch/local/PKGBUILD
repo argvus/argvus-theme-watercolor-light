@@ -1,0 +1,37 @@
+#!/bin/bash
+# Maintainer: William C. Canin <william.costa.canin@gmail.com>
+pkgname=argvus-theme-watercolor
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Watercolor theme for ARGVUS"
+arch=('any')
+url="https://github.com/argvus/argvus"
+license=('GPL-3.0-only')
+depends=(
+  'argvus'
+  'argvus-appearance>=0.1.0'
+)
+options=('!debug')
+source=("${pkgname}-${pkgver}.tar.gz")
+sha256sums=()
+
+# shellcheck disable=SC1091
+_functions_file="${startdir:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)}/../common/functions.sh"
+. "$_functions_file"
+
+prepare() {
+  arch_normalize_source_tree
+}
+
+check() {
+  # Verify theme payload structure
+  [ -d "${srcdir}/${pkgname}-${pkgver}/src" ] || return 1
+}
+
+package() {
+  local source_root="${srcdir}/${pkgname}-${pkgver}"
+  cp -a "${source_root}/src/." "${pkgdir}/"
+  find "${pkgdir}" -type f -name '*.sh' -exec chmod 755 {} +
+  install -Dm644 "${source_root}/LICENSE" \
+    "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}

@@ -1,0 +1,54 @@
+name: Package Compilation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate package sources
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+
+    steps:
+      - name: Install validation tools
+        run: |
+          pacman -Syu --noconfirm --needed base-devel git namcap pacman-contrib shellcheck sudo
+
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Validate repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          make validate
+
+      - name: Build local package
+        shell: bash
+        run: |
+          set -euo pipefail
+          useradd --create-home --shell /bin/bash builder
+          printf 'builder ALL=(ALL) NOPASSWD: ALL\n' >/etc/sudoers.d/builder
+          chown -R builder:builder "$GITHUB_WORKSPACE"
+          sudo -u builder env HOME=/home/builder make build
+
+  spellcheck:
+    name: Spellcheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Run cspell
+        uses: streetsidesoftware/cspell-action@v6
+        with:
+          config: cspell.json

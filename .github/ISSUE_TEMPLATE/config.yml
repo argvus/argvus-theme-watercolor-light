@@ -1,0 +1,9 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: ARGVUS Discussion
+    url: https://github.com/orgs/argvus/discussions
+    about: Ask questions and discuss ideas.
+  - name: Report a security vulnerability
+    url: https://github.com/argvus/argvus-theme-watercolor/security/policy
+    about: Report vulnerabilities privately, do not open a public issue.

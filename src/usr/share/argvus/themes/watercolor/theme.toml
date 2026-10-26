@@ -1,0 +1,103 @@
+# ARGVUS theme manifest (schema 2).
+#
+# This file is the whole theme. When the theme is applied, every component of
+# the desktop (taskbar, Control Panel, Hyprland, launcher, notifications, lock
+# screen, terminal, btop, yazi, Qt and GTK apps...) renders its own files from
+# the palette below, for the Sticky and the Float layouts alike.
+#
+# Check it at any time with `make check`, and try it on your desktop with
+# `make try`. See README.md for the whole workflow.
+schema = 2
+
+# The theme ID: lowercase letters, digits and single hyphens, equal to the name
+# of this directory, and never ending in "-float" (Float is a layout, not a
+# theme). It becomes the package name: argvus-theme-<id>.
+id = "watercolor"
+
+# The name shown in the theme menu and in the Control Center.
+name = "Watercolor"
+
+# "dark" or "light": the menu category, and the GTK and Qt colour scheme.
+category = "light"
+
+# The wallpaper the theme shows. The package installs it from
+# src/usr/share/backgrounds/argvus/; replace the placeholder with your own image.
+wallpaper = "/usr/share/backgrounds/argvus/abstract/light/watercolor-abstract-light.jxl"
+
+[name_i18n]
+en-US = "Watercolor"
+pt-BR = "Watercolor"
+
+[palette]
+# Watercolour paper and ink, taken from the wallpaper: a warm cream that is
+# darker than plain white (no glare), deep indigo ink for the text, and the
+# cerulean of the paint as the highlight. A colour is "#RGB", "#RRGGBB" or
+# "#RRGGBBAA".
+bg = "#E9E3D3"
+fg = "#22384F"
+accent = "#1A639C"
+
+# Every other colour of the desktop has a default derived from the three
+# above. Only the tokens below differ from those defaults; an entry is a colour
+# or an expression over other entries, written "@name | filter(...)".
+#
+# Semantic colours in the earthy pigments of the wallpaper (terracotta, sage
+# and ochre), dark enough to read on the paper.
+danger = "#A83C2A"
+ok = "#33704F"
+warn = "#8E5E0E"
+
+# Surfaces: the panels keep the paper tone, the cards and headers take a
+# little of the ink, and the borders a trace of the cerulean.
+bg_card = "@bg | mix(@fg, 0.06) | alpha(0.86)"
+bg_card_alt = "@bg | mix(@fg, 0.09) | alpha(0.86)"
+bg_header = "@bg | mix(@fg, 0.12) | alpha(0.86)"
+border_subtle = "@bg | mix(@fg, 0.16) | mix(@accent, 0.08)"
+
+# The second highlight is the apricot of the wallpaper, and the critical
+# notifications use a soft terracotta wash under the ink text.
+toolkit_accent_secondary = "#B05E22"
+notify_critical_background = "@danger | mix(@bg, 0.75)"
+
+# Window shadows: the default is a white glow on light themes; use none, as
+# the other light themes do.
+hypr_shadow_color = "#00000000"
+hypr_shadow_color_inactive = "#00000000"
+
+# Filters: alpha(0..1), mix(@other, 0..1), lighten(0..1), darken(0..1) and
+# contrast (black or white, whichever reads on the colour). The full list of
+# tokens is in the [palette] tables of /usr/share/argvus/theme/consumers.d/.
+
+# The 16 terminal colours (black, red, green, yellow, blue, magenta, cyan,
+# white, then their bright versions). overrides/terminal.conf reads them; an
+# entry may be an expression too, such as "@accent".
+[ansi]
+color0 = "#22384F"
+color1 = "#A83C2A"
+color2 = "#33704F"
+color3 = "#8E5E0E"
+color4 = "#1A639C"
+color5 = "#7E4E94"
+color6 = "#1D6F80"
+color7 = "#C4BBA6"
+color8 = "#5D6B79"
+color9 = "#CC5A3A"
+color10 = "#3F8460"
+color11 = "#A87A22"
+color12 = "#357FB6"
+color13 = "#A06FB2"
+color14 = "#2D8798"
+color15 = "#F3EEE2"
+
+# Optional: GTK colour scheme, when it should differ from the category:
+# "prefer-dark", "prefer-light" or "default".
+# [gtk]
+# scheme = "prefer-dark"
+
+# Files of this theme for some components, used instead of the component's
+# template when the palette is not enough. Paths are relative to this
+# directory, and each file is a template like the component's own
+# (/usr/share/argvus/<component>/theme-template/). Keys are the consumer IDs of
+# /usr/share/argvus/theme/consumers.d/. The terminal one adds the ANSI colours.
+[overrides]
+terminal = "overrides/terminal.conf"
