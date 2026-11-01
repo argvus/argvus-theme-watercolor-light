@@ -1,6 +1,6 @@
 #!/bin/bash
 # Maintainer: William C. Canin <william.costa.canin@gmail.com>
-pkgname=argvus-theme-watercolor
+pkgname=argvus-theme-watercolor-light
 pkgver=0.0.0
 pkgrel=1
 pkgdesc="Watercolor theme for ARGVUS"
